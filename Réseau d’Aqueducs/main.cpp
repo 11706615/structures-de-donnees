@@ -20,7 +20,14 @@ constexpr auto R{ 6371.f };
 
 auto distance(ListOfCities* List, unsigned a, unsigned b)
 {
-	return R * std::acos(std::sin(List->lat[a]) * std::sin(List->lat[b]) + std::cos(List->lon[a] - List->lon[b]) * std::cos(List->lat[a]) * std::cos(List->lat[b]));
+	auto x = 3.14159265f / 180.f;
+
+
+	auto lata = List->lat[a]*x, latb = List->lat[b]*x, lona = List->lon[a]*x, lonb = List->lon[b]*x;
+	
+	//auto x = sin(lata);
+	
+	return R * std::acosf(std::sinf(lata) * std::sinf(latb) + (std::cosf(lona - lonb) * std::cosf(lata) * std::cosf(latb)));
 }
 
 int comparer(const void* a, const void* b)
@@ -43,7 +50,11 @@ auto init(unsigned Taille)
 
 int main()
 {
+
 	auto* cities = citiesReader(150000);
+
+	auto d = distance(cities, 1, 16);
+
 
 	auto comp{ init(cities->number) };
 
@@ -53,7 +64,7 @@ int main()
 
 	for (auto i{ 0u }; i < cities->number; ++i)
 	{
-		for (auto j{ i }; j < cities->number; ++j)
+		for (auto j{ i + 1 }; j < cities->number; ++j)
 		{
 			arretes.push_back({ i, j, distance(cities, i, j) });
 		}
@@ -63,7 +74,9 @@ int main()
 
 	acm ACM{ comp, arretes };
 
-	saveGraph(ACM.trouver());
+	auto x = ACM.trouver();
+
+	saveGraph(x);
 
 
 	/*std::vector<acm::sommet> comp{ 0, 1, 2, 3, 4, 5, 6, 7 };
