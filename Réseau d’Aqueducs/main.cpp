@@ -6,29 +6,6 @@
 
 #include "prim-dijkstra.hpp"
 
-void saveGraph(std::vector<acm::arrete> cities) {
-	FILE* fileOut = NULL;
-	fileOut = fopen("resuGraph.dat", "w");
-	for (auto [i, j, poids] : cities)
-	{
-		fprintf(fileOut, "%i %i\n", i, j);
-	}
-	fclose(fileOut);
-}
-
-template <typename type>
-void saveGraph(std::vector<type> cities) {
-	FILE* fileOut = NULL;
-	fileOut = fopen("resuGraph.dat", "w");
-	for (auto [i, j, poids] : cities)
-	{
-		fprintf(fileOut, "%i %i\n", i, j);
-	}
-	fclose(fileOut);
-}
-
-constexpr auto R{ 6371.f };
-
 struct ville
 {
 	char Nom[64];
@@ -38,14 +15,15 @@ struct ville
 
 auto cout(const ville& VilleOrigine, const ville& VilleDestination)
 {
-	auto x = 3.14159265f / 180.f;
+	constexpr auto Pi{ 3.14159265f };
+	constexpr auto Radians{ 3.14159265f / 180.f };
+	constexpr auto Rayon{ 6371.f };
 
+	auto lata = VilleOrigine.Latitude * Radians, latb = VilleDestination.Latitude * Radians, lona = VilleOrigine.Longitude * Radians, lonb = VilleDestination.Longitude * Radians;
 
-	auto lata = VilleOrigine.Latitude * x, latb = VilleDestination.Latitude * x, lona = VilleOrigine.Longitude * x, lonb = VilleDestination.Longitude * x;
+	//auto Radians = sin(lata);
 
-	//auto x = sin(lata);
-
-	return R * std::acosf(std::sinf(lata) * std::sinf(latb) + (std::cosf(lona - lonb) * std::cosf(lata) * std::cosf(latb)));
+	return Rayon * std::acosf(std::sinf(lata) * std::sinf(latb) + (std::cosf(lona - lonb) * std::cosf(lata) * std::cosf(latb)));
 }
 
 std::vector<ville> lire(const char* Emplacement)
