@@ -36,9 +36,6 @@ auto algo(const std::vector<type>& Sommets, couts&& Couts)
 		}
 	};
 
-	arrete a{ 1,2,3.3 }, b{ 2,3,4.5 };
-	auto x = a < b;
-
 	auto Source{ 0u };
 	std::vector<arrete> Retour;
 	std::vector<bool> Visites(Sommets.size(), false);
