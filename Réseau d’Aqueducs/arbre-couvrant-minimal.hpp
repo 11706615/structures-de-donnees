@@ -5,7 +5,7 @@
 namespace ArbreCouvrantMinimal
 {
 	template <typename type, typename couts>
-	auto prim_dijkstra(const std::vector<type>& Sommets, couts&& Couts)
+	auto trouver_arretes(const std::vector<type>& Sommets, couts&& Couts)
 	{
 		struct arrete
 		{

@@ -76,8 +76,9 @@ void exporter(const std::vector<ville>& Villes, const char* Emplacement)
 	}
 }
 
-template <typename type>
-void exporter_arretes(const std::vector<type>& Arretes, const char* Emplacement)
+using arrete = decltype(algo(std::declval<std::vector<ville>>(), cout))::value_type;
+
+void exporter_arretes(const std::vector<arrete>& Arretes, const char* Emplacement)
 {
 	std::FILE* Fichier;
 
@@ -92,18 +93,45 @@ void exporter_arretes(const std::vector<type>& Arretes, const char* Emplacement)
 	}
 }
 
-int main(int argc, char* argv[])
+auto calculer_longueur(const std::vector<arrete>& Arretes)
 {
-	auto Villes{ lire("citiesList.csv") };
-	auto PopulationMinimale{ extraire_population_minimale(Villes, 250000) };
+	auto Longueur{ 0.f };
 
-	exporter(PopulationMinimale, "resuCities.dat");
+	for (const auto& Arrete : Arretes)
+	{
+		Longueur += Arrete.Cout;
+	}
 
-	//citiesReader(150000);
+	return Longueur;
+}
 
-	auto Arretes = algo(PopulationMinimale, cout);
 
-	exporter_arretes(Arretes, "resuGraph.dat");
+int main(int Nombre, const char* Arguments[])
+{
+	if (Nombre > 3)
+	{
+		auto Villes{ lire(Arguments[1]) };
 
-	return 0;
+		unsigned Population;
+
+		while (std::printf("Population : "), std::scanf("%u", &Population) == 1)
+		{
+			auto PopulationMinimale{ extraire_population_minimale(Villes, Population) };
+
+			exporter(PopulationMinimale, Arguments[2]);
+
+
+			auto Arretes = algo(PopulationMinimale, cout);
+
+			exporter_arretes(Arretes, Arguments[3]);
+
+			std::printf("%u villes exportées. Longueur du réseau : %f kms.\n", PopulationMinimale.size(), calculer_longueur(Arretes));
+		}
+
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
