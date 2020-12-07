@@ -61,10 +61,24 @@ std::vector<ville> extraire_population_minimale(const std::vector<ville>& Villes
 	return Resultat;
 }
 
-template <typename type>
-std::vector<ville> exporter_arretes(const std::vector<type>& Arretes, const char* Emplacement)
+void exporter(const std::vector<ville>& Villes, const char* Emplacement)
 {
-	std::vector<ville> Villes;
+	std::FILE* Fichier;
+
+	if ((Fichier = std::fopen(Emplacement, "w")) != nullptr)
+	{
+		for (const auto& [Nom, Population, Longitude, Latitude] : Villes)
+		{
+			fprintf(Fichier, "%i %f %f\n", Population, Longitude, Latitude);
+		}
+
+		fclose(Fichier);
+	}
+}
+
+template <typename type>
+void exporter_arretes(const std::vector<type>& Arretes, const char* Emplacement)
+{
 	std::FILE* Fichier;
 
 	if ((Fichier = std::fopen(Emplacement, "w")) != nullptr)
@@ -76,16 +90,16 @@ std::vector<ville> exporter_arretes(const std::vector<type>& Arretes, const char
 
 		fclose(Fichier);
 	}
-
-	return Villes;
 }
 
 int main(int argc, char* argv[])
 {
 	auto Villes{ lire("citiesList.csv") };
-	auto PopulationMinimale{ extraire_population_minimale(Villes, 150000) };
+	auto PopulationMinimale{ extraire_population_minimale(Villes, 250000) };
 
-	citiesReader(150000);
+	exporter(PopulationMinimale, "resuCities.dat");
+
+	//citiesReader(150000);
 
 	auto Arretes = algo(PopulationMinimale, cout);
 
