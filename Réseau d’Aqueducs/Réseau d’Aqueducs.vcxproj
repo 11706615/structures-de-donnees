@@ -147,9 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="acm.hpp" />
     <ClInclude Include="arbre-couvrant-minimal.hpp" />
-    <ClInclude Include="prim-dijkstra.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

@@ -1,8 +1,6 @@
 #include <cmath>
 
-#include "acm.hpp"
-
-#include "prim-dijkstra.hpp"
+#include "arbre-couvrant-minimal.hpp"
 
 struct ville
 {
@@ -74,7 +72,7 @@ void exporter(const std::vector<ville>& Villes, const char* Emplacement)
 	}
 }
 
-using arrete = decltype(algo(std::declval<std::vector<ville>>(), cout))::value_type;
+using arrete = decltype(ArbreCouvrantMinimal::trouver_arretes(std::declval<std::vector<ville>>(), cout))::value_type;
 
 void exporter_arretes(const std::vector<arrete>& Arretes, const char* Emplacement)
 {
@@ -118,8 +116,7 @@ int main(int Nombre, const char* Arguments[])
 
 			exporter(PopulationMinimale, Arguments[2]);
 
-
-			auto Arretes = algo(PopulationMinimale, cout);
+			auto Arretes = ArbreCouvrantMinimal::trouver_arretes(PopulationMinimale, cout);
 
 			exporter_arretes(Arretes, Arguments[3]);
 
