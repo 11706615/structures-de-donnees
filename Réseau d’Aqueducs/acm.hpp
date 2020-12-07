@@ -2,6 +2,8 @@
 
 #include <vector>
 
+
+
 struct acm
 {
 	using sommet = unsigned int;
