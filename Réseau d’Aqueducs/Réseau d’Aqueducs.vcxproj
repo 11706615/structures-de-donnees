@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="acm.hpp" />
     <ClInclude Include="citiesReader.h" />
+    <ClInclude Include="prim-dijkstra.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="citiesReader.c" />
