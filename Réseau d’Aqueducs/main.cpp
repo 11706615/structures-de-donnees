@@ -2,6 +2,8 @@
 
 #include "arbre-couvrant-minimal.hpp"
 
+#include "tas.hpp"
+
 struct ville
 {
 	char Nom[64];
@@ -104,6 +106,14 @@ auto calculer_longueur(const std::vector<arrete>& Arretes)
 
 int main(int Nombre, const char* Arguments[])
 {
+	tas<int> Tas(3);
+
+	Tas.inserer(4).inserer(1).inserer(2);
+
+	auto x = Tas.extraire();
+	auto y = Tas.extraire();
+
+
 	if (Nombre > 3)
 	{
 		auto Villes{ lire(Arguments[1]) };
