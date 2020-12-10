@@ -13,9 +13,9 @@ protected:
 
 public:
 
-	static_assert(noexcept(Table->~type()));
-
-	friend class tas <type&>;
+	static_assert(noexcept(Table->~type()), "La destruction d'un élément ne doit pas lever d'exception.");
+	static_assert(noexcept(*Table = static_cast<type&&>(*Table)), "Un élément doit pouvoir être déplacé sans lever d'exception.");
+	static_assert(noexcept(type{ static_cast<type&&>(*Table) }), "Un élément doit pouvoir être construit par déplacement sans lever d'exception.");
 
 	// Définit les types d'exception pouvant survenir.
 	enum class exception
@@ -158,12 +158,61 @@ public:
 		return this->Taille;
 	}
 
-#define a_un_pere(Fils) (Fils > 0)
-#define pere(Fils) (0.5 * (Fils - 1))
-#define a_un_fils_gauche(Pere) (2 * Pere + 1 < this->Nombre)
-#define fils_gauche(Pere) (2 * Pere + 1);
-#define a_un_fils_droit(Pere) (2 * Pere + 2 < this->Nombre)
-#define fils_droit(Pere) (2 * Pere + 2)
+private:
+
+	auto a_un_pere(unsigned Fils)
+	{
+		return Fils > 0;
+	}
+	auto pere(unsigned Fils)
+	{
+		return 0.5 * (Fils - 1);
+	}
+	auto a_un_fils_gauche(unsigned Pere)
+	{
+		return 2 * Pere + 1 < this->Nombre;
+	}
+	auto fils_gauche(unsigned Pere)
+	{
+		return 2 * Pere + 1;
+	}
+	auto a_un_fils_droit(unsigned Pere)
+	{
+		return 2 * Pere + 2 < this->Nombre;
+	}
+	auto fils_droit(unsigned Pere)
+	{
+		return 2 * Pere + 2;
+	}
+
+public:
+
+	tas<type>& inserer(type&& Element)
+	{
+		if (this->Nombre < this->Taille)
+		{
+			unsigned int Fils = this->Nombre, Pere;
+
+			new(this->Table + Fils) type{ static_cast <type&&> (Element) };
+
+			while (a_un_pere(Fils) && this->Table[Pere = pere(Fils)] > this->Table[Fils])
+			{
+				type NouvelElement{ static_cast<type&&>(this->Table[Fils]) };
+				this->Table[Fils] = static_cast<type&&>(this->Table[Pere]);
+				this->Table[Pere] = static_cast<type&&>(NouvelElement);
+
+				Fils = Pere;
+			}
+
+			++this->Nombre;
+
+			return *this;
+		}
+		else
+		{
+			throw exception::Plein;
+		}
+	}
 
 	template <typename... arguments>
 	tas<type>& inserer(arguments&& ...Arguments)
@@ -172,7 +221,7 @@ public:
 		{
 			unsigned int Fils = this->Nombre, Pere;
 
-			new(this->Table + Fils) type(static_cast <arguments && ...> (Arguments)...);
+			new(this->Table + Fils) type{ static_cast <arguments && ...> (Arguments)... };
 
 			while (a_un_pere(Fils) && this->Table[Pere = pere(Fils)] > this->Table[Fils])
 			{

@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "tas.hpp"
+
 namespace ArbreCouvrantMinimal
 {
 	template <typename type, typename couts>
@@ -18,6 +20,11 @@ namespace ArbreCouvrantMinimal
 				return this->Cout < Arrete.Cout;
 			}
 
+			bool operator >(const arrete& Arrete) noexcept
+			{
+				return this->Cout > Arrete.Cout;
+			}
+
 			static int comparer(const void* a, const void* b)
 			{
 				return ((arrete*)b)->Cout - ((arrete*)a)->Cout;
@@ -27,7 +34,7 @@ namespace ArbreCouvrantMinimal
 		auto Source{ 0u };
 		std::vector<arrete> Retour;
 		std::vector<bool> Visites(Sommets.size(), false);
-		std::vector<arrete> Tas;
+		tas<arrete> Tas{ 2000 * 2000 };
 
 		while (Retour.size() + 1 < Sommets.size())
 		{
@@ -35,17 +42,16 @@ namespace ArbreCouvrantMinimal
 
 			for (auto i{ 0u }; i < Sommets.size(); ++i)
 			{
-				if (!Visites[i]) Tas.push_back({ Source, i, Couts(Sommets[Source], Sommets[i]) });
+				if (!Visites[i]) Tas.inserer({ Source, i, Couts(Sommets[Source], Sommets[i]) });
 			}
 
-			std::qsort(Tas.data(), Tas.size(), sizeof(arrete), arrete::comparer);
+			//std::qsort(Tas.data(), Tas.size(), sizeof(arrete), arrete::comparer);
 
 			arrete x;
 
 			do
 			{
-				x = Tas.back();
-				Tas.pop_back();
+				x = Tas.extraire();
 			} while (Visites[x.Destination]);
 
 			Retour.push_back(x);
