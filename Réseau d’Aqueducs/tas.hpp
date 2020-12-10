@@ -8,8 +8,8 @@ class tas
 protected:
 
 	type* Table;
-	unsigned int Nombre;
-	unsigned int Taille;
+	size_t Nombre;
+	size_t Taille;
 
 public:
 
@@ -31,16 +31,16 @@ public:
 	// Construit un tas d'une certaine taille.
 	// Ses éléments sont construits à partir des arguments fournis.
 	template <typename... arguments>
-	tas(unsigned int Taille) try : Table{ static_cast<type*>(::operator new(static_cast <std::size_t> (Taille * sizeof(type)), static_cast <std::align_val_t> (alignof(type)))) }, Nombre{ }, Taille{ Taille } {}
-	catch (std::bad_alloc const&)
+	tas(size_t Taille) try : Table{ static_cast<type*>(::operator new(Taille * sizeof(type), static_cast <std::align_val_t> (alignof(type)))) }, Nombre{ }, Taille{ Taille } {}
+	catch (const std::bad_alloc&)
 	{
 		throw exception::Allocation;
 	}
 
 	// Copie les éléments du tas existant vers le nouveau.
-	tas(const tas<type>& Tas) try : Table(static_cast<type*>(::operator new(static_cast<std::size_t> (Tas.Taille * sizeof(type)), static_cast <std::align_val_t> (alignof(type))))), Taille(Tas.Taille)
+	tas(const tas<type>& Tas) try : Table{ static_cast<type*>(::operator new(Tas.Taille * sizeof(type)), static_cast <std::align_val_t> (alignof(type))) }, Nombre{ }, Taille{ Tas.Taille }
 	{
-		for (unsigned int i = 0; i < Tas.Nombre; ++i)
+		for (size_t i = 0; i < Tas.Nombre; ++i)
 		{
 			try
 			{
@@ -48,7 +48,7 @@ public:
 			}
 			catch (...)
 			{
-				for (unsigned int j = 0; j < i; ++j)
+				for (size_t j = 0; j < i; ++j)
 				{
 					this->Table[j].~type();
 				}
@@ -75,7 +75,7 @@ public:
 	// Détruit le tas.
 	~tas()
 	{
-		for (auto i{ 0u }; i < this->Taille; ++i)
+		for (size_t i = 0; i < this->Taille; ++i)
 		{
 			this->Table[i].~type();
 		}
@@ -97,7 +97,7 @@ public:
 			throw exception::Allocation;
 		}
 
-		for (unsigned int i = 0; i < Tas.Nombre; ++i)
+		for (size_t i = 0; i < Tas.Nombre; ++i)
 		{
 			try
 			{
@@ -105,7 +105,7 @@ public:
 			}
 			catch (...)
 			{
-				for (unsigned int j = 0; j < i; ++j)
+				for (size_t j = 0; j < i; ++j)
 				{
 					Table[j].~type();
 				}
@@ -116,7 +116,7 @@ public:
 			}
 		}
 
-		for (unsigned int i = 0; i < this->Nombre; ++i)
+		for (size_t i = 0; i < this->Nombre; ++i)
 		{
 			this->Table[i].~type();
 		}
@@ -137,89 +137,62 @@ public:
 		this->Table = Tas.Table;
 		Tas.Table = Table;
 
-		unsigned int Nombre = this->Nombre;
+		size_t Nombre = this->Nombre;
 		this->Nombre = Tas.Nombre;
 		Tas.Nombre = Nombre;
 
-		unsigned int Taille = this->Taille;
+		size_t Taille = this->Taille;
 		this->Taille = Tas.Taille;
 		Tas.Taille = Taille;
 
 		return *this;
 	}
 
-	unsigned nombre() const noexcept
+	size_t nombre() const noexcept
 	{
 		return this->Nombre;
 	}
 
-	unsigned taille() const noexcept
+	size_t taille() const noexcept
 	{
 		return this->Taille;
 	}
 
 private:
 
-	auto a_un_pere(unsigned Fils)
+	auto a_un_pere(size_t Fils)
 	{
 		return Fils > 0;
 	}
-	auto pere(unsigned Fils)
+	auto pere(size_t Fils)
 	{
-		return 0.5 * (Fils - 1);
+		return (Fils - 1) >> 1;
 	}
-	auto a_un_fils_gauche(unsigned Pere)
+	auto a_un_fils_gauche(size_t Pere)
 	{
-		return 2 * Pere + 1 < this->Nombre;
+		return (Pere << 1) + 1 < this->Nombre;
 	}
-	auto fils_gauche(unsigned Pere)
+	auto fils_gauche(size_t Pere)
 	{
-		return 2 * Pere + 1;
+		return (Pere << 1) + 1;
 	}
-	auto a_un_fils_droit(unsigned Pere)
+	auto a_un_fils_droit(size_t Pere)
 	{
-		return 2 * Pere + 2 < this->Nombre;
+		return (Pere << 1) + 2 < this->Nombre;
 	}
-	auto fils_droit(unsigned Pere)
+	auto fils_droit(size_t Pere)
 	{
-		return 2 * Pere + 2;
+		return (Pere << 1) + 2;
 	}
 
 public:
-
-	tas<type>& inserer(type&& Element)
-	{
-		if (this->Nombre < this->Taille)
-		{
-			unsigned int Fils = this->Nombre, Pere;
-
-			new(this->Table + Fils) type{ static_cast <type&&> (Element) };
-
-			while (a_un_pere(Fils) && this->Table[Pere = pere(Fils)] > this->Table[Fils])
-			{
-				type NouvelElement{ static_cast<type&&>(this->Table[Fils]) };
-				this->Table[Fils] = static_cast<type&&>(this->Table[Pere]);
-				this->Table[Pere] = static_cast<type&&>(NouvelElement);
-
-				Fils = Pere;
-			}
-
-			++this->Nombre;
-
-			return *this;
-		}
-		else
-		{
-			throw exception::Plein;
-		}
-	}
 
 	template <typename... arguments>
 	tas<type>& inserer(arguments&& ...Arguments)
 	{
 		if (this->Nombre < this->Taille)
 		{
-			unsigned int Fils = this->Nombre, Pere;
+			size_t Fils = this->Nombre, Pere;
 
 			new(this->Table + Fils) type{ static_cast <arguments && ...> (Arguments)... };
 
@@ -246,7 +219,7 @@ public:
 	{
 		if (this->Nombre > 0)
 		{
-			unsigned int Fils, FilsGauche, FilsDroit, Pere = 0;
+			size_t Fils, FilsGauche, FilsDroit, Pere = 0;
 
 			type Premier{ static_cast<type&&>(this->Table[0]) };
 			this->Table[0] = static_cast<type&&>(this->Table[--this->Nombre]);

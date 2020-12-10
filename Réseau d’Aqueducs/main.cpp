@@ -84,7 +84,7 @@ void exporter_arretes(const std::vector<arrete>& Arretes, const char* Emplacemen
 	{
 		for (const auto& [Origine, Destination, Distance] : Arretes)
 		{
-			fprintf(Fichier, "%i %i\n", Origine, Destination);
+			fprintf(Fichier, "%zu %zu\n", Origine, Destination);
 		}
 
 		fclose(Fichier);
@@ -130,7 +130,7 @@ int main(int Nombre, const char* Arguments[])
 
 			exporter_arretes(Arretes, Arguments[3]);
 
-			std::printf("%u villes exportées. Longueur du réseau : %f kms.\n", PopulationMinimale.size(), calculer_longueur(Arretes));
+			std::printf("%zu villes exportées. Longueur du réseau : %f kms.\n", PopulationMinimale.size(), calculer_longueur(Arretes));
 		}
 
 		return 0;
