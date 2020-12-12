@@ -28,7 +28,7 @@ namespace ArbreCouvrantMinimal
 			}
 		};
 
-		position Source = 0;
+		position Origine = 0;
 		std::vector<arrete> Retour;
 		std::vector<bool> Visites(Sommets.size(), false);
 
@@ -36,11 +36,11 @@ namespace ArbreCouvrantMinimal
 		
 		while (Retour.size() + 1 < Sommets.size())
 		{
-			Visites[Source] = true;
+			Visites[Origine] = true;
 
-			for (size_t i = 0; i < Sommets.size(); ++i)
+			for (size_t Destination = 0; Destination < Sommets.size(); ++Destination)
 			{
-				if (!Visites[i]) Tas.inserer(Source, i, Couts(Sommets[Source], Sommets[i]));
+				if (!Visites[Destination]) Tas.inserer(Origine, Destination, Couts(Sommets[Origine], Sommets[Destination]));
 			}
 
 			arrete Arrete;
@@ -51,7 +51,7 @@ namespace ArbreCouvrantMinimal
 			} while (Visites[Arrete.Destination]);
 
 			Retour.push_back(Arrete);
-			Source = Arrete.Destination;
+			Origine = Arrete.Destination;
 		}
 
 		return Retour;

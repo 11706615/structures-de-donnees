@@ -1,8 +1,7 @@
 #include <cmath>
+#include <iostream>
 
 #include "arbre-couvrant-minimal.hpp"
-
-#include "tas.hpp"
 
 struct ville
 {
@@ -101,7 +100,6 @@ auto calculer_longueur(const std::vector<arrete>& Arretes)
 	return Longueur;
 }
 
-
 int main(int Nombre, const char* Arguments[])
 {
 	if (Nombre > 1)
@@ -112,21 +110,34 @@ int main(int Nombre, const char* Arguments[])
 
 		while (std::printf("Population : "), std::scanf("%u", &Population) == 1)
 		{
-			auto PopulationMinimale{ extraire_population_minimale(Villes, Population) };
+			try
+			{
+				auto PopulationMinimale{ extraire_population_minimale(Villes, Population) };
 
-			if (Nombre > 2) exporter(PopulationMinimale, Arguments[2]);
+				if (Nombre > 2) exporter(PopulationMinimale, Arguments[2]);
 
-			auto Arretes{ ArbreCouvrantMinimal::trouver_arretes(PopulationMinimale, distance) };
+				auto Arretes{ ArbreCouvrantMinimal::trouver_arretes(PopulationMinimale, distance) };
 
-			if (Nombre > 3) exporter_arretes(Arretes, Arguments[3]);
+				if (Nombre > 3) exporter_arretes(Arretes, Arguments[3]);
 
-			std::printf("%zu villes exportées. Longueur du réseau : %f kms.\n", PopulationMinimale.size(), calculer_longueur(Arretes));
+				std::printf("%zu villes exportées. Longueur du réseau : %f kms.\n", PopulationMinimale.size(), calculer_longueur(Arretes));
+			}
+			catch (tas<arrete>::exception Exception)
+			{
+				switch (Exception)
+				{
+				case tas<arrete>::exception::Allocation: std::cerr << "Pas assez de mémoire." << std::endl; break;
+				default: std::cerr << "Erreur inattendue." << std::endl; break;
+				}
+			}
 		}
 
 		return 0;
 	}
 	else
 	{
+		std::cerr << "Arguments attendus : ImporterVilles [ExporterVilles] [ExporterArretes]";
+
 		return 1;
 	}
 }
