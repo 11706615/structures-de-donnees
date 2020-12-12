@@ -84,7 +84,7 @@ public:
 	}
 
 	// Assigne une copie d'un tas.
-	tas <type>& operator =(tas <type> const& Tas)
+	tas <type>& operator =(const tas <type>& Tas)
 	{
 		type* Table;
 
