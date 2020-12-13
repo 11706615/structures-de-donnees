@@ -40,55 +40,73 @@ int main(int Nombre, const char* Arguments[])
 	{
 		auto Villes{ lire(Arguments[1]) };
 
-		unsigned Population;
-
-		while (std::printf("Population : "), std::scanf("%u", &Population) == 1)
+		if (Villes.size() > 0)
 		{
-			try
+
+
+			unsigned Population;
+
+			while (std::printf("Population : "), std::scanf("%u", &Population) == 1)
 			{
-				auto PopulationMinimale{ extraire_population_minimale(Villes, Population) };
+				try
+				{
+					auto PopulationMinimale{ extraire_population_minimale(Villes, Population) };
 
-				if (Nombre > 2) exporter(PopulationMinimale, Arguments[2]);
+					if (Nombre > 2)
+					{
+						exporter(PopulationMinimale, Arguments[2]);
 
+						std::printf("%zu villes exportées.\n", PopulationMinimale.size());
+					}
 #ifdef GLOUTON
-				struct local
-				{
-					static auto comparer(const void* Origine, const void* Destination)
+					struct local
 					{
-						return static_cast<int>(((arrete*)Origine)->Cout - ((arrete*)Destination)->Cout);
-					}
-				};
+						static auto comparer(const void* Origine, const void* Destination)
+						{
+							return static_cast<int>(((arrete*)Origine)->Cout - ((arrete*)Destination)->Cout);
+						}
+					};
 
-				std::vector<arrete> Tri;
+					std::vector<arrete> Tri;
 
-				Tri.reserve((PopulationMinimale.size() * (PopulationMinimale.size() - 1)) >> 1);
+					Tri.reserve((PopulationMinimale.size() * (PopulationMinimale.size() - 1)) >> 1);
 
-				for (size_t Origine = 0; Origine < PopulationMinimale.size(); ++Origine)
-				{
-					for (size_t Destination = Origine + 1; Destination < PopulationMinimale.size(); ++Destination)
+					for (size_t Origine = 0; Origine < PopulationMinimale.size(); ++Origine)
 					{
-						Tri.push_back({ Origine, Destination, distance(PopulationMinimale[Origine], PopulationMinimale[Destination]) });
+						for (size_t Destination = Origine + 1; Destination < PopulationMinimale.size(); ++Destination)
+						{
+							Tri.push_back({ Origine, Destination, distance(PopulationMinimale[Origine], PopulationMinimale[Destination]) });
+						}
 					}
-				}
 
-				std::qsort(Tri.data(), Tri.size(), sizeof(arrete), local::comparer);
+					std::qsort(Tri.data(), Tri.size(), sizeof(arrete), local::comparer);
 
-				auto Arretes{ Graphe::trouver_arretes(Tri, PopulationMinimale.size()) };
+					auto Arretes{ Graphe::trouver_arretes(Tri, PopulationMinimale.size()) };
 #else
-				auto Arretes{ Graphe::trouver_arretes(PopulationMinimale, distance) };
+					auto Arretes{ Graphe::trouver_arretes(PopulationMinimale, distance) };
 #endif
-				if (Nombre > 3) exporter_arretes(Arretes, Arguments[3]);
+					if (Nombre > 3)
+					{
+						exporter_arretes(Arretes, Arguments[3]);
 
-				std::printf("%zu villes exportées. Longueur du réseau : %f kms.\n", PopulationMinimale.size(), calculer_longueur(Arretes));
-			}
-			catch (tas<arrete>::exception Exception)
-			{
-				switch (Exception)
+						std::printf("%zu arrêtes exportées.\n", Arretes.size());
+					}
+
+					std::printf("Longueur du réseau : %f kms.\n", calculer_longueur(Arretes));
+				}
+				catch (tas<arrete>::exception Exception)
 				{
-				case tas<arrete>::exception::Allocation: std::cerr << "Pas assez de mémoire." << std::endl; break;
-				default: std::cerr << "Erreur inattendue." << std::endl; break;
+					switch (Exception)
+					{
+					case tas<arrete>::exception::Allocation: std::cerr << "Pas assez de mémoire." << std::endl; break;
+					default: std::cerr << "Erreur inattendue." << std::endl; break;
+					}
 				}
 			}
+		}
+		else
+		{
+			std::cout << "Aucune ville n'a été importée." << std::endl;
 		}
 
 		return 0;
