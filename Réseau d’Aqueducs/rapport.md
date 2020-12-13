@@ -1,7 +1,7 @@
-- Adrien Simonnet
-- Pierre Wu
 # Projet : Réseau d’Aqueducs
 La France a décidé de repenser son réseau d’aqueducs pour rendre l’approvisionnement des communes en eau plus efficace. Le chef du projet vous charge de calculer le réseau le plus court reliant toutes les villes, ainsi que sa taille. Pour ce faire, vous calculerez l’arbre couvrant de poids minimal sur un graphe dont les nœuds sont les villes ; les arêtes sont les connexions entre les villes, et le poids associé à chaque arête est la distance entre les villes en kilomètre.
+- Adrien Simonnet
+- Pierre Wu
 ## Structures de données
 - `Vecteur` : Tableau faisant office d'un ensemble indicé fini d'objets quelconques. L'accès à un élément est constant.
 - `Arrête` : Agrégat contenant le sommet d'origine, de destination et le coût d'une arrête. Le type des sommets est générique ce qui permet de supporter les versions 64 bits mais il doit être numérique et non signé.
