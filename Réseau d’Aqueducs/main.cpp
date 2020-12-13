@@ -32,7 +32,7 @@ auto calculer_longueur(const std::vector<arrete>& Arretes)
 	return Longueur;
 }
 
-#define GLOUTONS
+#define PRIM
 
 int main(int Nombre, const char* Arguments[])
 {
@@ -95,7 +95,7 @@ int main(int Nombre, const char* Arguments[])
 	}
 	else
 	{
-		std::cerr << "Arguments attendus : ImporterVilles [ExporterVilles] [ExporterArretes]";
+		std::cerr << "Arguments attendus : ImporterVilles [ExporterVilles] [ExporterArretes]" << std::endl;
 
 		return 1;
 	}

@@ -194,7 +194,7 @@ public:
 		{
 			size_t Fils = this->Nombre, Pere;
 
-			new(this->Table + Fils) type{ static_cast <arguments && ...> (Arguments)... };
+			new(this->Table + Fils) type{ std::forward<arguments>(Arguments)... };
 
 			while (a_un_pere(Fils) && this->Table[Pere = pere(Fils)] > this->Table[Fils])
 			{

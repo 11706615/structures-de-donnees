@@ -18,7 +18,7 @@ auto distance(const ville& VilleOrigine, const ville& VilleDestination)
 
 	auto LatitudeOrigine = VilleOrigine.Latitude * Radians, LatitudeDestination = VilleDestination.Latitude * Radians, LongitudeOrigine = VilleOrigine.Longitude * Radians, LongitudeDestination = VilleDestination.Longitude * Radians;
 
-	return Rayon * std::acosf(std::sinf(LatitudeOrigine) * std::sinf(LatitudeDestination) + (std::cosf(LongitudeOrigine - LongitudeDestination) * std::cosf(LatitudeOrigine) * std::cosf(LatitudeDestination)));
+	return Rayon * std::acos(std::sin(LatitudeOrigine) * std::sin(LatitudeDestination) + (std::cos(LongitudeOrigine - LongitudeDestination) * std::cos(LatitudeOrigine) * std::cos(LatitudeDestination)));
 }
 
 std::vector<ville> extraire_population_minimale(const std::vector<ville>& Villes, unsigned Population)
@@ -45,7 +45,7 @@ std::vector<ville> lire(const char* Emplacement)
 	{
 		ville Ville;
 
-		while (fscanf_s(Fichier, "%*[^,],%*[^,],%*[^,],%[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%u,%*[^,],%*[^,],%*[^,],%*[^,],%f,%f,%*[^\n]", &Ville.Nom, static_cast<unsigned> (sizeof(ville::Nom)), &Ville.Population, &Ville.Longitude, &Ville.Latitude) == 4)
+		while (fscanf(Fichier, "%*[^,],%*[^,],%*[^,],%[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],%u,%*[^,],%*[^,],%*[^,],%*[^,],%f,%f,%*[^\n]", &Ville.Nom, &Ville.Population, &Ville.Longitude, &Ville.Latitude) == 4)
 		{
 			Villes.push_back(Ville);
 		}
