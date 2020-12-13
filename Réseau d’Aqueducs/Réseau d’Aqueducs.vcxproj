@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="arbre-couvrant-minimal.hpp" />
     <ClInclude Include="tas.hpp" />
+    <ClInclude Include="ville.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
