@@ -1,12 +1,13 @@
 # Projet : Réseau d’Aqueducs
 ## Compilation du programme
 L'ensemble du programme est écrit en C++17. Le programme peut être compilé en 64 bits ce qui permet une utilisation moins limitée de la mémoire.
-### Visual Studio
-Le git contient un projet configuré, il suffit de l'ouvrir avec Visual Studio 2019.
+### Visual Studio 2019
+Le git contient un projet configuré, il suffit d'ouvrir la solution .sln.
 ### g++
-Un makefile est fourni, il suffit de se déplacer dans le dossier "Réseau d’Aqueducs" puis taper `make` dans un terminal. Le Makefile générera un fichier "prog" qui est l'executable. Le programme prend de un à trois arguments (voir Exécution du programme)
-
-Exemple d'éxécution (si citiesList.csv a été placé dans le dossier actuel): ```./prog citiesList.csv resuCities.dat resuGraph.dat```
+Un makefile est fourni, il suffit de se déplacer dans le dossier "Réseau d’Aqueducs" puis taper `make` dans un terminal. Le Makefile générera un fichier "prog" qui pourra être éxécuté de la manière suivante :
+```bash
+./prog citiesList.csv resuCities.dat resuGraph.dat
+```
 ## Exécution du programme
 Une fois compilé, le programme doit être éxécuté en passant les arguments `ImporterVilles [ExporterVilles] [ExporterArretes]` avec :
 - `ImporterVilles` Emplacement du fichier contenant les villes à importer.
