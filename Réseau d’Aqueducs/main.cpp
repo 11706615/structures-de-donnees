@@ -1,10 +1,9 @@
-#include <cmath>
 #include <iostream>
 
 #include "arbre-couvrant-minimal.hpp"
 #include "ville.hpp"
 
-using arrete = decltype(Graphe::trouver_arretes(std::declval<std::vector<ville>>(), distance))::value_type;
+using arrete = Graphe::arrete<size_t,float>;
 
 void exporter_arretes(const std::vector<arrete>& Arretes, const char* Emplacement)
 {
@@ -33,7 +32,7 @@ auto calculer_longueur(const std::vector<arrete>& Arretes)
 	return Longueur;
 }
 
-#define GLOUTON
+#define GLOUTONS
 
 int main(int Nombre, const char* Arguments[])
 {
@@ -54,13 +53,13 @@ int main(int Nombre, const char* Arguments[])
 #ifdef GLOUTON
 				struct local
 				{
-					static auto comparer(const void* a, const void* b)
+					static auto comparer(const void* Origine, const void* Destination)
 					{
-						return static_cast <int> (((Graphe::arrete<size_t, float>*)a)->Cout - ((Graphe::arrete<size_t, float>*)b)->Cout);
+						return static_cast<int>(((arrete*)Origine)->Cout - ((arrete*)Destination)->Cout);
 					}
 				};
 
-				std::vector<Graphe::arrete<size_t, float>> Tri;
+				std::vector<arrete> Tri;
 
 				Tri.reserve((PopulationMinimale.size() * (PopulationMinimale.size() - 1)) >> 1);
 
@@ -72,7 +71,7 @@ int main(int Nombre, const char* Arguments[])
 					}
 				}
 
-				std::qsort(Tri.data(), Tri.size(), sizeof(Graphe::arrete<size_t, float>), local::comparer);
+				std::qsort(Tri.data(), Tri.size(), sizeof(arrete), local::comparer);
 
 				auto Arretes{ Graphe::trouver_arretes(Tri, PopulationMinimale.size()) };
 #else

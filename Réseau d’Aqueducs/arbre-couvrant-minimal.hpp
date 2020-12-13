@@ -42,6 +42,7 @@ namespace Graphe
 				Origine = Arrete.Destination;
 			}
 		}
+
 		return Retour;
 	}
 

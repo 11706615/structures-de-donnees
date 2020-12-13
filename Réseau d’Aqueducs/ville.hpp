@@ -13,7 +13,7 @@ struct ville
 auto distance(const ville& VilleOrigine, const ville& VilleDestination)
 {
 	constexpr auto Pi{ 3.14159265f };
-	constexpr auto Radians{ 3.14159265f / 180.f };
+	constexpr auto Radians{ Pi / 180.f };
 	constexpr auto Rayon{ 6371.f };
 
 	auto LatitudeOrigine = VilleOrigine.Latitude * Radians, LatitudeDestination = VilleDestination.Latitude * Radians, LongitudeOrigine = VilleOrigine.Longitude * Radians, LongitudeDestination = VilleDestination.Longitude * Radians;
