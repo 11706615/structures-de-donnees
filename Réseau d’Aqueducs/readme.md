@@ -4,7 +4,7 @@ L'ensemble du programme est écrit en C++17. Le programme peut être compilé en
 ### Visual Studio 2019
 Le git contient un projet configuré, il suffit d'ouvrir la solution .sln.
 ### g++
-Un makefile est fourni, il suffit de se déplacer dans le dossier "Réseau d’Aqueducs" puis taper `make` dans un terminal. Le Makefile générera un fichier "prog" qui pourra être éxécuté de la manière suivante :
+Un makefile est fourni, il suffit de se déplacer dans le dossier "Réseau d’Aqueducs" puis taper `make` dans un terminal. Il générera un fichier "prog" qui pourra être éxécuté de la manière suivante :
 ```bash
 ./prog citiesList.csv resuCities.dat resuGraph.dat
 ```
