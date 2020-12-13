@@ -12,8 +12,8 @@ Le principe de cet algorithme est de prendre un ensemble de sommets indicés que
 - Retourne un ensemble de n-1 arrêtes (avec n le nombre de sommets passés en argument) qui composent un arbre couvrant minimal entre ces sommets.
 #### Compléxité
 O(n * log(m)) avec n le nombre de sommets et m = (n * (n - 1)) / 2 le nombre d'arrêtes.
-### 2
-Le principe de cet algorithme est de prendre un ensemble d'arrêtes déjà triées.
+### Glouton
+Le principe de cet algorithme est de prendre un ensemble d'arrêtes déjà triées. Sn avantage est de ne traiter que les arrêtes fournies.
 #### Pré-conditions
 - `Arretes` : Ensemble fini **trié par ordre croissant** d'arrêtes.
 - `Taille` : Nombre de sommets du graphe. Ce nombre doit être supérieur à tout sommet (origine ou destination) stocké dans les arrêtes.
@@ -24,12 +24,12 @@ O(m * log(m)) avec n le nombre de sommets et m = (n * (n - 1)) / 2 le nombre d'a
 ## Meilleur algorithme
 Pour le problème posé, il ne fait aucun doute que le premier algorithme doit être privilégié car cela revient à déterminer le plus court chemin d'un graphe complet. En effet il existe potentiellement un chemin entre toutes les villes.
 
-
-Population minimale  | Villes | Temps de calcul | Longueur du réseau | Graphe
-:------------------: | :----: | :-------------: | :----------------: | :----:
-0                    |        |                 |                    | ![alt text](./Rapport/0.png "0 habitant et plus")
-1000                 |        |                 |                    | ![alt text](./Rapport/1000.png "1 000 habitants et plus")
-10 000               |        |                 |                    | ![alt text](./Rapport/10000.png "10 000 habitants et plus")
-50 000               |        |                 |                    | ![alt text](./Rapport/50000.png "50 000 habitants et plus")
-100 000              |        |                 |                    | ![alt text](./Rapport/100000.png "100 000 habitants et plus")
-250 000              |        |                 |                    | ![test](./Rapport/250000.png "250 000 habitants et plus")
+## Tests effectués
+Population minimale  | Villes | Temps de calcul | Longueur du réseau (km) | Graphe
+:------------------: | :----: | :-------------: | :---------------------: | :----:
+0                    | 36201  | 295,5720658     | 90002                   | ![0 habitant et plus](./Rapport/0.png "0 habitant et plus")
+1000                 | 9490   | 11,4878384      | 41104                   | ![1 000 habitants et plus](./Rapport/1000.png "1 000 habitants et plus")
+10 000               | 889    | 0,10865         | 10671                   | ![10 000 habitants et plus](./Rapport/10000.png "10 000 habitants et plus")
+50 000               | 113    | 0,001961        | 4554                    | ![50 000 habitants et plus](./Rapport/50000.png "50 000 habitants et plus")
+100 000              | 39     | 0,000249        | 3497                    | ![100 000 habitants et plus](./Rapport/100000.png "100 000 habitants et plus")
+250 000              | 8      | 0,000035        | 1850                    | ![250 000 habitants et plus](./Rapport/250000.png "250 000 habitants et plus")
