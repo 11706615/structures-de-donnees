@@ -31,9 +31,9 @@ Pour le problème posé, il ne fait aucun doute que le premier algorithme doit �
 ## Tests effectués
 Population minimale  | Villes | Temps de calcul (sec) | Longueur du réseau (km) | Graphe
 :------------------: | :----: | :-------------------: | :---------------------: | :----:
-0                    | 36201  | 295,5720658           | 90002                   | ![0 habitant et plus](./Rapport/0.png "0 habitant et plus")
-1000                 | 9490   | 11,4878384            | 41104                   | ![1 000 habitants et plus](./Rapport/1000.png "1 000 habitants et plus")
-10 000               | 889    | 0,10865               | 10671                   | ![10 000 habitants et plus](./Rapport/10000.png "10 000 habitants et plus")
-50 000               | 113    | 0,001961              | 4554                    | ![50 000 habitants et plus](./Rapport/50000.png "50 000 habitants et plus")
-100 000              | 39     | 0,000249              | 3497                    | ![100 000 habitants et plus](./Rapport/100000.png "100 000 habitants et plus")
-250 000              | 8      | 0,000035              | 1850                    | ![250 000 habitants et plus](./Rapport/250000.png "250 000 habitants et plus")
+0                    | 36201  | 295,5720658           | 90002                   | ![0 habitant et plus](./0.png "0 habitant et plus")
+1000                 | 9490   | 11,4878384            | 41104                   | ![1 000 habitants et plus](./1000.png "1 000 habitants et plus")
+10 000               | 889    | 0,10865               | 10671                   | ![10 000 habitants et plus](./10000.png "10 000 habitants et plus")
+50 000               | 113    | 0,001961              | 4554                    | ![50 000 habitants et plus](./50000.png "50 000 habitants et plus")
+100 000              | 39     | 0,000249              | 3497                    | ![100 000 habitants et plus](./100000.png "100 000 habitants et plus")
+250 000              | 8      | 0,000035              | 1850                    | ![250 000 habitants et plus](./250000.png "250 000 habitants et plus")
