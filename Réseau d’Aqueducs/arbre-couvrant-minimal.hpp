@@ -3,38 +3,23 @@
 #include <vector>
 
 #include "tas.hpp"
+#include "arrete.hpp"
 
-namespace ArbreCouvrantMinimal
+namespace Graphe
 {
 	template <typename type, typename couts>
 	auto trouver_arretes(const std::vector<type>& Sommets, couts&& Couts)
 	{
 		using position = typename std::vector<type>::size_type;
+		using cout = decltype(Couts(std::declval<type>(), std::declval<type>()));
 
-		struct arrete
-		{
-			position Origine;
-			position Destination;
-			decltype(Couts(std::declval<type>(), std::declval<type>())) Cout;
-
-			bool operator <(const arrete& Arrete) noexcept
-			{
-				return this->Cout < Arrete.Cout;
-			}
-
-			bool operator >(const arrete& Arrete) noexcept
-			{
-				return this->Cout > Arrete.Cout;
-			}
-		};
-
-		std::vector<arrete> Retour;
+		std::vector<Graphe::arrete<position, cout>> Retour;
 
 		if (Sommets.size() > 0)
 		{
 			Retour.reserve(Sommets.size() - 1);
 			std::vector<bool> Visites(Sommets.size(), false);
-			tas<arrete> Tas{ (Sommets.size() * (Sommets.size() - 1)) >> 1 };
+			tas<Graphe::arrete<position, cout>> Tas{ (Sommets.size() * (Sommets.size() - 1)) >> 1 };
 			position Origine = 0;
 
 			while (Retour.size() + 1 < Sommets.size())
@@ -46,7 +31,7 @@ namespace ArbreCouvrantMinimal
 					if (!Visites[Destination]) Tas.inserer(Origine, Destination, Couts(Sommets[Origine], Sommets[Destination]));
 				}
 
-				arrete Arrete;
+				Graphe::arrete<position, cout> Arrete;
 
 				do
 				{

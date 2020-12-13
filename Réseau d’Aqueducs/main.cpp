@@ -2,10 +2,9 @@
 #include <iostream>
 
 #include "arbre-couvrant-minimal.hpp"
-
 #include "ville.hpp"
 
-using arrete = decltype(ArbreCouvrantMinimal::trouver_arretes(std::declval<std::vector<ville>>(), distance))::value_type;
+using arrete = decltype(Graphe::trouver_arretes(std::declval<std::vector<ville>>(), distance))::value_type;
 
 void exporter_arretes(const std::vector<arrete>& Arretes, const char* Emplacement)
 {
@@ -50,7 +49,7 @@ int main(int Nombre, const char* Arguments[])
 
 				if (Nombre > 2) exporter(PopulationMinimale, Arguments[2]);
 
-				auto Arretes{ ArbreCouvrantMinimal::trouver_arretes(PopulationMinimale, distance) };
+				auto Arretes{ Graphe::trouver_arretes(PopulationMinimale, distance) };
 
 				if (Nombre > 3) exporter_arretes(Arretes, Arguments[3]);
 
