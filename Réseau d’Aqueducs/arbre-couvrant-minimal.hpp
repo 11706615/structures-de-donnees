@@ -13,13 +13,13 @@ namespace Graphe
 		using position = typename std::vector<type>::size_type;
 		using cout = decltype(Couts(std::declval<type>(), std::declval<type>()));
 
-		std::vector<Graphe::arrete<position, cout>> Retour;
+		std::vector<arrete<position, cout>> Retour;
 
 		if (Sommets.size() > 0)
 		{
 			Retour.reserve(Sommets.size() - 1);
 			std::vector<bool> Visites(Sommets.size(), false);
-			tas<Graphe::arrete<position, cout>> Tas{ (Sommets.size() * (Sommets.size() - 1)) >> 1 };
+			tas<arrete<position, cout>> Tas{ (Sommets.size() * (Sommets.size() - 1)) >> 1 };
 			position Origine = 0;
 
 			while (Retour.size() + 1 < Sommets.size())
@@ -31,7 +31,7 @@ namespace Graphe
 					if (!Visites[Destination]) Tas.inserer(Origine, Destination, Couts(Sommets[Origine], Sommets[Destination]));
 				}
 
-				Graphe::arrete<position, cout> Arrete;
+				arrete<position, cout> Arrete;
 
 				do
 				{
@@ -45,41 +45,38 @@ namespace Graphe
 		return Retour;
 	}
 
-	template <typename type, typename couts>
-	auto trouver_arretes(const std::vector<type>& Sommets, couts&& Couts)
+	template <typename position, typename cout>
+	auto trouver_arretes(const std::vector<arrete<position, cout>>& Arretes, position Taille)
 	{
-		using position = typename std::vector<type>::size_type;
-		using cout = decltype(Couts(std::declval<type>(), std::declval<type>()));
+		std::vector<position> Composantes;
 
-		std::vector<Graphe::arrete<position, cout>> Retour;
+		Composantes.reserve(Taille);
 
-		if (Sommets.size() > 0)
+		for (position i = 0; i < Taille; ++i)
 		{
-			Retour.reserve(Sommets.size() - 1);
-			std::vector<bool> Visites(Sommets.size(), false);
-			tas<Graphe::arrete<position, cout>> Tas{ (Sommets.size() * (Sommets.size() - 1)) >> 1 };
-			position Origine = 0;
+			Composantes.push_back(i);
+		}
 
-			while (Retour.size() + 1 < Sommets.size())
+		std::vector <arrete<position, cout>> Resultat;
+
+		Resultat.reserve(Taille - 1);
+
+		for (auto& Arrete : Arretes)
+		{
+			if (Composantes[Arrete.Origine] != Composantes[Arrete.Destination])
 			{
-				Visites[Origine] = true;
+				Resultat.push_back(Arrete);
 
-				for (size_t Destination = 0; Destination < Sommets.size(); ++Destination)
+				auto Origine = Composantes[Arrete.Origine];
+				auto Destination = Composantes[Arrete.Destination];
+
+				for (auto& Composante : Composantes)
 				{
-					if (!Visites[Destination]) Tas.inserer(Origine, Destination, Couts(Sommets[Origine], Sommets[Destination]));
+					if (Composante == Destination) Composante = Origine;
 				}
-
-				Graphe::arrete<position, cout> Arrete;
-
-				do
-				{
-					Arrete = Tas.extraire();
-				} while (Visites[Arrete.Destination]);
-
-				Retour.push_back(Arrete);
-				Origine = Arrete.Destination;
 			}
 		}
-		return Retour;
+
+		return Resultat;
 	}
 }
