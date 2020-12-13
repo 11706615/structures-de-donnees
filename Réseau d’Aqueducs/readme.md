@@ -1,6 +1,10 @@
 # Projet : Réseau d’Aqueducs
 ## Compilation du programme
-L'ensemble du programme est écrit en C++17.
+L'ensemble du programme est écrit en C++17. Le programme peut être compilé en 64 bits ce qui permet une utilisation moins limitée de la mémoire.
+### Visual Studio
+Le git contient un projet configuré, il suffit de l'ouvrir avec Visual Studio 2019.
+### g++
+Un makefile est fourni, il suffit de taper `make` dans un terminal.
 ## Exécution du programme
 Une fois compilé, le programme doit être éxécuté en passant les arguments suivants `ImporterVilles [ExporterVilles] [ExporterArretes]` avec :
 - `ImporterVilles` Emplacement du fichier contenant les villes à importer.
