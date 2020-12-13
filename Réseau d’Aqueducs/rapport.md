@@ -27,9 +27,9 @@ Pour le problème posé, il ne fait aucun doute que le premier algorithme doit �
 
 Population minimale  | Villes | Temps de calcul | Longueur du réseau | Graphe
 :------------------: | :----: | :-------------: | :----------------: | :----:
-0                    |        |                 |                    | ![tiny arrow](https://github.com/11706615/structures-de-donnees/blob/old_master/R%C3%A9seau%20d%E2%80%99Aqueducs/result.png "tiny arrow")
-1000                 |        |                 |                    | ![tiny arrow](https://github.com/11706615/structures-de-donnees/blob/old_master/R%C3%A9seau%20d%E2%80%99Aqueducs/result.png "tiny arrow")
-10 000               |        |                 |                    | ![tiny arrow](https://github.com/11706615/structures-de-donnees/blob/old_master/R%C3%A9seau%20d%E2%80%99Aqueducs/result.png "tiny arrow")
-50 000               |        |                 |                    | ![tiny arrow](https://github.com/11706615/structures-de-donnees/blob/old_master/R%C3%A9seau%20d%E2%80%99Aqueducs/result.png "tiny arrow")
-100 000              |        |                 |                    | ![tiny arrow](https://github.com/11706615/structures-de-donnees/blob/old_master/R%C3%A9seau%20d%E2%80%99Aqueducs/result.png "tiny arrow")
-250 000              |        |                 |                    | ![tiny arrow](https://github.com/11706615/structures-de-donnees/blob/old_master/R%C3%A9seau%20d%E2%80%99Aqueducs/result.png "tiny arrow")
+0                    |        |                 |                    | ![alt text](./Rapport/0.png "0 habitant et plus")
+1000                 |        |                 |                    | ![alt text](./Rapport/1000.png "1 000 habitants et plus")
+10 000               |        |                 |                    | ![alt text](./Rapport/10000.png "10 000 habitants et plus")
+50 000               |        |                 |                    | ![alt text](./Rapport/50000.png "50 000 habitants et plus")
+100 000              |        |                 |                    | ![alt text](./Rapport/100000.png "100 000 habitants et plus")
+250 000              |        |                 |                    | ![test](./Rapport/250000.png "250 000 habitants et plus")
