@@ -6,7 +6,7 @@ Le git contient un projet configuré, il suffit de l'ouvrir avec Visual Studio 2
 ### g++
 Un makefile est fourni, il suffit de taper `make` dans un terminal.
 ## Exécution du programme
-Une fois compilé, le programme doit être éxécuté en passant les arguments suivants `ImporterVilles [ExporterVilles] [ExporterArretes]` avec :
+Une fois compilé, le programme doit être éxécuté en passant les arguments `ImporterVilles [ExporterVilles] [ExporterArretes]` avec :
 - `ImporterVilles` Emplacement du fichier contenant les villes à importer.
 - `ExporterVilles` (Facultatif) Emplacement du fichier qui contiendra les villes dont la population correspond.
 - `ExporterArretes` (Facultatif) Emplacement du fichier qui contiendra les arretes du graphe minimal correspondant.
