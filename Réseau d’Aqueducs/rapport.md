@@ -1,4 +1,7 @@
 # Projet : Réseau d’Aqueducs
+La France a décidé de repenser son réseau d’aqueducs pour rendre l’approvisionnement des communes en eau plus efficace. Le chef du projet vous charge de calculer le réseau le plus court reliant toutes les villes, ainsi que sa taille. Pour ce faire, vous calculerez l’arbre couvrant de poids minimal sur un graphe dont les nœuds sont les villes ; les arêtes sont les connexions entre les villes, et le poids associé à chaque arête est la distance entre les villes en kilomètre.
+- Adrien Simonnet
+- Pierre Wu
 ## Choix du langage de programmation
 Le C++ a été une évidence pour travailler ce projet car il s'agit d'un langage tout d'abord extrèmement performant mais aussi permettant une abstraction quasi totale. En C++ il est possible de rédiger du code d'une manière mathématiquement rigoureuse tout en exploitant la généricité. Il est possible de poser des assertions sur les types avant la compilation.
 ## Algorithmes
@@ -25,11 +28,11 @@ O(m * log(m)) avec n le nombre de sommets et m = (n * (n - 1)) / 2 le nombre d'a
 Pour le problème posé, il ne fait aucun doute que le premier algorithme doit être privilégié car cela revient à déterminer le plus court chemin d'un graphe complet. En effet il existe potentiellement un chemin entre toutes les villes.
 
 ## Tests effectués
-Population minimale  | Villes | Temps de calcul | Longueur du réseau (km) | Graphe
-:------------------: | :----: | :-------------: | :---------------------: | :----:
-0                    | 36201  | 295,5720658     | 90002                   | ![0 habitant et plus](./Rapport/0.png "0 habitant et plus")
-1000                 | 9490   | 11,4878384      | 41104                   | ![1 000 habitants et plus](./Rapport/1000.png "1 000 habitants et plus")
-10 000               | 889    | 0,10865         | 10671                   | ![10 000 habitants et plus](./Rapport/10000.png "10 000 habitants et plus")
-50 000               | 113    | 0,001961        | 4554                    | ![50 000 habitants et plus](./Rapport/50000.png "50 000 habitants et plus")
-100 000              | 39     | 0,000249        | 3497                    | ![100 000 habitants et plus](./Rapport/100000.png "100 000 habitants et plus")
-250 000              | 8      | 0,000035        | 1850                    | ![250 000 habitants et plus](./Rapport/250000.png "250 000 habitants et plus")
+Population minimale  | Villes | Temps de calcul (sec) | Longueur du réseau (km) | Graphe
+:------------------: | :----: | :-------------------: | :---------------------: | :----:
+0                    | 36201  | 295,5720658           | 90002                   | ![0 habitant et plus](./Rapport/0.png "0 habitant et plus")
+1000                 | 9490   | 11,4878384            | 41104                   | ![1 000 habitants et plus](./Rapport/1000.png "1 000 habitants et plus")
+10 000               | 889    | 0,10865               | 10671                   | ![10 000 habitants et plus](./Rapport/10000.png "10 000 habitants et plus")
+50 000               | 113    | 0,001961              | 4554                    | ![50 000 habitants et plus](./Rapport/50000.png "50 000 habitants et plus")
+100 000              | 39     | 0,000249              | 3497                    | ![100 000 habitants et plus](./Rapport/100000.png "100 000 habitants et plus")
+250 000              | 8      | 0,000035              | 1850                    | ![250 000 habitants et plus](./Rapport/250000.png "250 000 habitants et plus")
