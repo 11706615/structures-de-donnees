@@ -1,7 +1,6 @@
 CC = g++ -std=c++17
 
 all: prog 
-	./prog citiesList.csv
 	cleano
 
 prog: main.o arbre-couvrant-minimal.hpp tas.hpp arrete.hpp
